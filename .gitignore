@@ -5,3 +5,4 @@ tacotron2
 sample.wav
 node_modules/
 server/public/
+client_deprecated/

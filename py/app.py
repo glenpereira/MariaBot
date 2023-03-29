@@ -20,3 +20,6 @@ def process_text():
         path_to_file = "./sample.wav"
         return send_file(
             path_to_file, mimetype="audio/wav", as_attachment=True, attachment_filename="sample.wav")
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')
