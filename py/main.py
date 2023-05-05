@@ -1,9 +1,9 @@
 import sys
-from tacotron2.waveglow.denoiser import Denoiser
-from tacotron2.text import text_to_sequence
+from malayalam_tacotron2.waveglow.denoiser import Denoiser
+from malayalam_tacotron2.text import text_to_sequence
 # from tacotron2.audio_processing import griffin_lim
 # from tacotron2.layers import TacotronSTFT
-from tacotron2.model import Tacotron2
+from malayalam_tacotron2.model import Tacotron2
 import torch
 import numpy as np
 # import matplotlib.pylab as plt
@@ -14,11 +14,11 @@ from os.path import join
 # from os.path import exists, basename, splitext
 from scipy.io.wavfile import write
 
-sys.path.append(join('tacotron2/', 'waveglow/'))
+sys.path.append(join('malayalam_tacotron2/', 'waveglow/'))
 sys.path.append('waveglow')
 
 force_download_TT2 = True
-tacotron2_pretrained_model = './models/Maria'  # @param {type:"string"}
+tacotron2_pretrained_model = './models/Maria_56'  # @param {type:"string"}
 # @param {type:"string"}
 waveglow_pretrained_model = './models/waveglow_256channels_ljs_v3.pt'
 
@@ -68,7 +68,7 @@ def ARPA(text):
 
 # torch.set_grad_enabled(False)
 
-def create_audio(input_text):
+def create_audio(input_text, file_name):
     # initialize Tacotron2 with the pretrained model
     hparams = create_hparams()
 
@@ -91,6 +91,7 @@ def create_audio(input_text):
     denoiser = Denoiser(waveglow)
 
     text = input_text  # @param {type:"string"}
+    name = file_name
     sigma = 0.8
     denoise_strength = 0.324
     # disables automatic ARPAbet conversion, useful for inputting your own ARPAbet pronounciations or just for testing.
@@ -118,7 +119,7 @@ def create_audio(input_text):
         # print(""); #ipd.display(ipd.Audio(audio[0].data.cpu().numpy(), rate=hparams.sampling_rate))
             audio = waveglow.infer(mel_outputs_postnet, sigma=sigma)
             audio_numpy = audio[0].data.cpu().numpy().astype(np.float32)
-            write("sample.wav", hparams.sampling_rate, audio_numpy)
+            write(name, hparams.sampling_rate, audio_numpy)
             completion_status = True
             print(audio_numpy)
     
