@@ -1,7 +1,7 @@
 venv/
 __pycache__/
 models/
-tacotron2
+malayalam_tacotron2
 sample.wav
 node_modules/
 server/public/
