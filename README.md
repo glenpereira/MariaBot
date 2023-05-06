@@ -12,5 +12,6 @@ A Malayalam TTS engine built using Tacotron2 and WaveGlow.
 6. Install packages from requirements.txt
 7. Install PyTorch: `pip3 install torch torchvision torchaudio`
 8. Configure aws cli with access keys
+9. Create a 'models' directory and download your models with gdown.  
 
 Credits to [Parapsychic](https://github.com/parapsychic/tacotron2-malayalam) for training the model on the Malayalam language using [Tacotron2](https://github.com/NVIDIA/tacotron2) and [Waveglow](https://github.com/NVIDIA/waveglow/)
