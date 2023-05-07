@@ -1,4 +1,4 @@
-import os , logging
+import os , uuid
 from main import create_audio
 from flask import Flask, send_file, request
 from flask_cors import CORS
@@ -21,14 +21,25 @@ def process_text():
         if request_data:
             if 'text' in request_data:
                 input = request_data['text']
-                file_name = request_data['name'] + ".wav"
+                id = uuid.uuid4()
+                print(id)
+                file_name = str(id) + '.wav'
+                print(file_name)
+                author = request_data['author']
 
         completion_status = create_audio(input, file_name)
         if completion_status == True:
             path_to_file = "./" + file_name
             upload_file(file_name, UPLOAD_BUCKET)
-            return send_file(
-                path_to_file, mimetype="audio/wav", as_attachment=True, download_name=file_name)
+            url = f"https://mariabot.s3.ap-south-1.amazonaws.com/{file_name}"
+            return {
+                "name": file_name,
+                "src": url,
+                "author": author
+            }
+
+            # return send_file(
+            #     path_to_file, mimetype="audio/wav", as_attachment=True, download_name=file_name)
     finally:
         os.remove(file_name)
 
