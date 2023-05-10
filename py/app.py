@@ -1,4 +1,5 @@
-import os , uuid
+import os
+import uuid
 from main import create_audio
 from flask import Flask, send_file, request
 from flask_cors import CORS
@@ -35,13 +36,15 @@ def process_text():
             return {
                 "name": file_name,
                 "src": url,
-                "author": author
+                "author": author,
+                "text": input
             }
 
             # return send_file(
             #     path_to_file, mimetype="audio/wav", as_attachment=True, download_name=file_name)
     finally:
         os.remove(file_name)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
